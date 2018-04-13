@@ -1,5 +1,12 @@
 # AngularEscolaJoao
 
+#### Alterações Feitas por Branch:
+  - Adicionado __*FormsModule*__ no (app.component.ts) 
+  - Criada __*Classe Disciplina*__ no (disciplina.model.ts)
+  - Adicionado __*Bootstrap*__ no (app.component.ts) e no `NPM install`
+  - Adicionado __*Popper JS*__ no `NPM install`
+  - Adicionado __*JQuery*__ no `NPM install`
+  
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
 ## Development server
