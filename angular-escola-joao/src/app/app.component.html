@@ -6,9 +6,15 @@
       </a>
     </nav>
     <div class="jumbotron jumbotron-fluid">
-        <div class="container"><h1 class="display-4">{{title}}!</h1></div>
+        <div class="container">
+            <h1 class="display-4">
+                {{title}}!
+              <button class="btn btn-outline-primary" (click)="exibirFormularioEmBranco()">Cadastrar</button>
+            </h1>
+        </div>
     </div>
-    <table class="table table-sm" *ngIf="!disciplinaaexibir">
+
+    <table class="table table-sm">
         <thead>
             <tr>
                 <th scope="col">Codigo</th>
@@ -20,29 +26,29 @@
             <tr *ngFor="let disciplina of disciplinas">
                 <th scope="row">{{disciplina.codigo}}</th>
                 <td>{{disciplina.nome}}</td>
-                <td><button class="btn btn-info" (click)="exibirDisciplina(disciplina)">Detalhes</button></td>
+                <td>
+                    <button class="btn btn-outline-warning" (click)="editar(disciplina)">Editar</button>
+                    <button class="btn btn-outline-danger" (click)="excluir(disciplina)">Excluir</button>
+                </td>
             </tr>
         </tbody>
     </table>
-  <button class="btn btn-warning" (click)="limpar()">Limpar</button>
-    <div *ngIf="disciplinaaexibir">
-        <form>
+    <button class="btn btn-warning" (click)="limpar()">Limpar</button>
+    <div *ngIf="exibirFormulario">
+        <form #cadastro="ngForm" (submit)="salvar()">
             <div class="form-group">
-                <label for="exampleFormControlInput1">Codigo</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1" value="{{disciplinaaexibir.codigo}}" readonly>
+                <label for="codigo">Codigo</label>
+                <input type="number" class="form-control" id="codigo" name="codigo" [(ngModel)]="codigo" autofocus required>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlInput2">Nome</label>
-                <input type="text" class="form-control" id="exampleFormControlInput2" value="{{disciplinaaexibir.nome}}" readonly>
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="nome" required>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlInput3">Professor</label>
-                <input type="text" class="form-control" id="exampleFormControlInput3" value="{{disciplinaaexibir.professor.nome}}" readonly>
+                <label for="descricao">Descricao</label>
+                <textarea class="form-control" id="descricao" name="descricao" [(ngModel)]="descricao" rows="10"></textarea>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlInput4">Descricao</label>
-              <textarea type="text" class="form-control" id="exampleFormControlInput4" placeholder="{{disciplinaaexibir.descricao}}" readonly rows="10"></textarea>
-            </div>
+            <button type="submit" class="btn" [class.btn-success]="cadastro.valid" [class.btn-outline-success]="!cadastro.valid" [disabled]="!cadastro.valid">Salvar</button>
         </form>
     </div>
 </div>
