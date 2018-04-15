@@ -2,7 +2,7 @@
 
 #### Alterações Feitas por Branch:
   - Adicionado __*FormsModule*__ no (app.component.ts) 
-  - Criada __*Classe Disciplina*__ no (disciplina.model.ts)
+  - Criada __*Classe Disciplina*__ no (disciplina.ts)
   - Adicionado __*Bootstrap*__ no (app.component.ts) e no `NPM install`
   - Adicionado __*Popper JS*__ no `NPM install`
   - Adicionado __*JQuery*__ no `NPM install`
