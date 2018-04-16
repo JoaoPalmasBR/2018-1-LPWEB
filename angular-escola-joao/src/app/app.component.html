@@ -1,104 +1,32 @@
 <div class="container">
-    <nav class="navbar navbar-dark bg-info">
-        <a class="navbar-brand" href="./">
-            <img src="../favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
-            {{projeto}}
+  <nav class="navbar navbar-dark bg-info">
+    <a class="navbar-brand" href="./">
+      <img src="../favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
+      {{projeto}}
+    </a>
+  </nav>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">
+        {{title}}!
+      </h1>
+      <p class="lead">
+        Repositorio sobre as atividades feitas em sala e as feitas em casa da materia de LPWEB (Linguagem de Programação para Web)
+      </p>
+      <hr class="my-4">
+      <div class="list-group">
+        <a class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let repo of repositorios">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{repo.nome}}</h5>
+            <small>{{repo.datadecriacao}}</small>
+          </div>
+          <p class="mb-1">{{repo.objetivo}}</p>
+          <small>
+            <a href="{{repo.endereco}}" class="btn btn-outline-light bg-secondary" style="color: white;">Executar</a>
+            <a href="{{repo.github}}" class="btn btn-outline-dark bg-secondary" style="color: black;">GitHub</a>
+          </small>
         </a>
-    </nav>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <h1 class="display-4">
-                {{title}}!
-                <button class="btn btn-outline-primary" (click)="exibirFormularioEmBranco()">Cadastrar</button>
-            </h1>
-        </div>
+      </div>
     </div>
-    <div *ngIf="atualizou"></div>
-    <div *ngIf="!atualizou">{{inicio()}}</div>
-    <table class="table table-sm">
-        <thead>
-            <tr>
-                <th scope="col">Codigo</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Detalhes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let disciplina of disciplinas">
-                <th scope="row">{{disciplina.codigo}}</th>
-                <td>{{disciplina.nome}}</td>
-                <td>
-                    <button class="btn btn-outline-warning" (click)="editar(disciplina)">Editar</button>
-                    <button class="btn btn-outline-danger" (click)="excluir(disciplina)">Excluir</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-warning" (click)="limpar()">Limpar</button>
-    <div *ngIf="exibirFormulario">
-        <form #cadastro="ngForm" (submit)="salvar()">
-            <!-- Codigo -->
-            <div class="form-group">
-                <label for="codigo">Codigo</label>
-                <input type="number" min="0" class="form-control" id="codigo" name="codigo" [(ngModel)]="codigo" autofocus required>
-            </div>
-            <!-- Nome -->
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="nome" required>
-            </div>
-            <!-- Data -->
-            <div class="form-group">
-                <label for="data">Data</label>
-                <input type="date" class="form-control" id="data" name="data" [(ngModel)]="data">
-            </div>
-            <!-- Esta Ativo -->
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="checkbox" name="estaativo" id="estaativo" [(ngModel)]="estaativo" value="ativo">
-                    </div>
-                </div>
-                <input type="text" class="form-control" value="Está Ativo" readonly disabled>
-            </div>
-            <!-- Tipo -->
-            <p>Tipo</p>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="radio" name="tipo" id="tipoprincipal" [(ngModel)]="tipo" value="principal" [checked]="tipo=='principal'">
-                    </div>
-                </div>
-                <input type="text" class="form-control" value="Principal" readonly disabled >
-            </div>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input type="radio" name="tipo" id="tiposecundaria" [(ngModel)]="tipo" value="tiposecundaria" [checked]="tipo!='principal'">
-                    </div>
-                </div>
-                <input type="text" class="form-control" value="Secundária" readonly disabled >
-            </div>
-            <!-- Periodo -->
-            <div class="form-group">
-                <label for="periodo">Periodo</label>
-                <select class="form-control" id="periodo" name="periodo" [(ngModel)]="periodo">
-                    <option value="1" selected>1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
-            </div>
-            <!-- Descrição -->
-            <div class="form-group">
-                <label for="descricao">Descricao</label>
-                <textarea class="form-control" id="descricao" name="descricao" [(ngModel)]="descricao" rows="10"></textarea>
-            </div>
-            <button type="submit" class="btn" [class.btn-success]="cadastro.valid" [class.btn-outline-success]="!cadastro.valid" [disabled]="!cadastro.valid">Salvar</button>
-        </form>
-    </div>
+  </div>
 </div>
