@@ -7,8 +7,8 @@ import {Repositorio} from "./repositorio";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Disciplinas';
-  projeto = 'Angular Escola';
+  title = 'LPWeb';
+  projeto = 'Angular';
   repositorios = [
     new Repositorio("01 - Listando Disciplinas","./01%20-%20Listando%20Disciplinas/","https://github.com/JoaoPalmasBR/2018-1-LPWEB/tree/01-listando-disciplinas","14-04-2018","Funcionalidade Apresentar a Lista de Disciplinas."),
     new Repositorio("02 - CRUD Disciplinas","./02%20-%20Crud%20Disciplinas/","https://github.com/JoaoPalmasBR/2018-1-LPWEB/tree/02-crud-disciplinas","14-04-2018","Implementar um CRUD de Disciplinas."),
