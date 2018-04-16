@@ -1,154 +1,152 @@
 import { Component } from '@angular/core';
-import {Disciplina} from "./disciplina";
-import {Professor} from "./professor";
+//import {Disciplina} from "./disciplina";
+//import {Professor} from "./professor";
+
+import {Aluno} from "./aluno"; //g1
+import {Tipo} from "./tipo"; //g1
+import {Ocorrencia} from "./ocorrencia"; //g1
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'Disciplinas';
-    projeto = 'Angular Escola';
-    disciplinas = [];
-
-    //Disciplina
-    codigo = null;
-    nome = null;
-    descricao = null;
-    data = null;
-    estaativo = false;
-    tipo = null;
-    periodo = null;
-
-    //projeto
-    exibirFormulario = false;
-    editando = null;
-
-    atualizou = false;// INICIO CHECK parte do processo pra descobrir se existe armazenamento no LOCALSTORAGE
-    textoatualizacao = "";
-    inicio(){
-        if(localStorage.getItem("disciplinas")){
-            this.textoatualizacao = "existe";
-            this.disciplinas = JSON.parse(localStorage.getItem("disciplinas"));
-        }
-        else{
-            this.textoatualizacao = "nao existe";
-        }
-        this.atualizou = true;
-    }// FINAL CHECK parte do processo pra descobrir se existe armazenamento no LOCALSTORAGE
-
-    //Metodos
-    exibirFormularioEmBranco(){
-        this.limpar();
-        this.exibirFormulario = true;
+  //title = 'Disciplinas';
+  projeto = 'Angular Ocorrencias';
+  alunos = [
+    new Aluno(0,"Ana"),
+    new Aluno(1,"Bruno"),
+    new Aluno(2,"Carla"),
+    new Aluno(3,"Daniele")
+  ];
+  tipos = [
+    new Tipo(0,"Indisciplina em Sala de Aula"),
+    new Tipo(1,"Comportamento Inadequado com Colegas"),
+    new Tipo(2,"Baixo Índice de Rendimento"),
+    new Tipo(3,"Indicação de Atenção por Assunto Familiar, Psicológico ou Social")
+  ];
+  //ocorrencias = [];
+  ///*
+  ocorrencias = [
+    new Ocorrencia(0,"Ana", "2018-04-16",true,"Joao",0,"Sem Observacao"),
+    new Ocorrencia(0,"Ana", "2018-04-16",true,"Joao",0,"Sem Observacao"),
+    new Ocorrencia(0,"Ana", "2018-04-16",true,"Joao",0,"Sem Observacao"),
+    new Ocorrencia(0,"Ana", "2018-03-16",true,"Joao",0,"Sem Observacao"),
+    new Ocorrencia(0,"Ana", "2018-03-16",true,"Joao",0,"Sem Observacao"),
+    new Ocorrencia(0,"Ana", "2018-03-16",true,"Joao",0,"Sem Observacao"),
+    new Ocorrencia(0,"Ana", "2018-03-16",true,"Joao",0,"Sem Observacao")
+  ];
+  //*/
+  //Ocorrencia
+  alunomatricula = null;
+  alunonome = null;
+  data = null;
+  responsavelcompareceu = false;
+  responsavelnome = null;
+  tipo = null;
+  observacao = null;
+  //Estatisticas
+  tipo0 = 0;
+  tipo1 = 0;
+  tipo2 = 0;
+  tipo3 = 0;
+  tipoTodos = 0;
+  totalmarco = 0;
+  totalabril = 0;
+  percentual0 = 0;
+  percentual1 = 0;
+  percentual2 = 0;
+  percentual3 = 0;
+  percentualrelacao = 0;
+  //projeto
+  exibirFormulario = false;
+  cadastrou = false;
+  atualizou = false;// INICIO CHECK parte do processo pra descobrir se existe armazenamento no LOCALSTORAGE
+  inicio(){
+    if(localStorage.getItem("tipos")){
+      //existe
+      this.tipos = JSON.parse(localStorage.getItem("tipos"));
     }
-    salvar(){
-        if(!this.editando){
-            const disci = new Disciplina(this.codigo,this.nome,this.data,this.estaativo,this.tipo,this.periodo,this.descricao);
-            //localStorage.setItem(disci.codigo, JSON.stringify(disci));
-            this.disciplinas.push(disci);
-            this.limpar();
-        }
-        else{
-            this.editando.codigo = this.codigo;
-            this.editando.nome = this.nome;
-            this.editando.descricao = this.descricao;
-            this.editando.data = this.data;
-            this.editando.estaativo = this.estaativo;
-            this.editando.tipo = this.tipo;
-            this.editando.periodo = this.periodo;
-            this.limpar();
+    if(localStorage.getItem("ocorrencias")){
+      //existe
+      this.ocorrencias = JSON.parse(localStorage.getItem("ocorrencias"));
+    }
+    if(localStorage.getItem("alunos")){
+      //existe
+      this.alunos = JSON.parse(localStorage.getItem("alunos"));
+    }
+    else{
+      //nao existe
+    }
+    this.atualizou = true;
+  }// FINAL CHECK parte do processo pra descobrir se existe armazenamento no LOCALSTORAGE
 
-        }
-      localStorage.clear();
-      localStorage.setItem("disciplinas", JSON.stringify(this.disciplinas));
+  //Metodos
+  exibirFormularioEmBranco(){
+    this.limpar();
+    this.exibirFormulario = true;
+    this.cadastrou = false;
+  }
+  atualizar(){
+    this.tipo0 = 0;
+    this.tipo1 = 0;
+    this.tipo2 = 0;
+    this.tipo3 = 0;
+    this.percentual0 = 0;
+    this.percentual1 = 0;
+    this.percentual2 = 0;
+    this.percentual3 = 0;
+    this.percentualrelacao = 0;
+    this.tipoTodos = 0;
+    this.totalmarco = 0;
+    this.totalabril = 0;
+    for(let x of this.ocorrencias){
+      if(x.tipo==0){
+        this.tipo0 ++;
+      }
+      if(x.tipo==1){
+        this.tipo1 ++;
+      }
+      if(x.tipo==2){
+        this.tipo2 ++;
+      }
+      if(x.tipo==3){
+        this.tipo3 ++;
+      }
+      this.tipoTodos ++;
+      if(x.data.indexOf("-04-") != -1){
+        this.totalabril ++;
+      }
+      if(x.data.indexOf("-03-") != -1){
+        this.totalmarco ++;
+      }
     }
-    editar(disciplina){
-        this.editando = disciplina;
-        this.codigo = this.editando.codigo;
-        this.nome = this.editando.nome;
-        this.descricao = this.editando.descricao;
-        this.data = this.editando.data;
-        this.estaativo = this.editando.estaativo;
-        this.tipo = this.editando.tipo;
-        this.periodo = this.editando.periodo;
-        this.exibirFormulario = true;
-    }
-    limpar(){
-        this.codigo = null;
-        this.nome = null;
-        this.descricao = null;
-        this.data = null;
-        this.estaativo = false;
-        this.tipo = null;
-        this.periodo = null;
-        this.exibirFormulario = false;
-        this.editando = null;
-    }
-    excluir(disciplina){
-        const i = this.disciplinas.indexOf(disciplina);
-        this.disciplinas.splice(i, 1);
-        localStorage.clear();
-        localStorage.setItem("disciplinas", JSON.stringify(this.disciplinas));
-    }
-    /*
-    disciplinas = [
-        new Disciplina(
-            0,
-            'Língua Portuguesa',
-            'O objetivo norteador da BNCC de Língua Portuguesa ' +
-            'é garantir a todos os alunos o acesso aos saberes linguísticos necessários para a ' +
-            'participação social e o exercício da cidadania, pois é por meio da língua que o ser ' +
-            'humano pensa, comunica-se, tem acesso à informação, expressa e defende pontos de ' +
-            'vista, partilha ou constrói visões de mundo e produz conhecimento.'),
-        new Disciplina(
-            1,
-            'Educação Física',
-            'A Educação Física é o componente curricular ' +
-            'que tematiza as práticas corporais em suas diversas formas de codificação e ' +
-            'significação social, entendidas como manifestações das possibilidades ' +
-            'expressivas dos sujeitos e patrimônio cultural da humanidade. Nessa concepção, ' +
-            'o movimento humano está sempre inserido no âmbito da cultura e não se limita a ' +
-            'um deslocamento espaço-temporal de um segmento corporal ou de um corpo todo. ' +
-            'Logo, as práticas corporais são textos culturais passíveis de leitura e produção.'),
-        new Disciplina(
-            2,
-            'Inglês',
-            'Aprender a língua inglesa propicia a criação de novas ' +
-            'formas de engajamento e participação dos alunos em um mundo social cada vez mais ' +
-            'globalizado e plural, em que as fronteiras entre países e interesses pessoais, ' +
-            'locais, regionais, nacionais e transnacionais estão cada vez mais difusas e ' +
-            'contraditórias. Assim, o estudo da língua inglesa possibilita aos alunos ampliar ' +
-            'horizontes de comunicação e de intercâmbio cultural, científico e acadêmico e, ' +
-            'nesse sentido, abre novos percursos de acesso, construção de conhecimentos e ' +
-            'participação social. É esse caráter formativo que inscreve a aprendizagem de ' +
-            'inglês em uma perspectiva de educação linguística, consciente e crítica, na ' +
-            'qual as dimensões pedagógicas e políticas são intrinsecamente ligadas.'),
-        new Disciplina(
-            3,
-            'Matemática',
-            'No Ensino Fundamental, essa área, por meio da ' +
-            'articulação de seus diversos campos – Aritmética, Álgebra, Geometria, ' +
-            'Estatística e Probabilidade – precisa garantir que os alunos relacionem ' +
-            'observações empíricas do mundo real a representações (tabelas, figuras e esquemas) ' +
-            'e associem essas representações a uma atividade matemática, conceitos e propriedades, ' +
-            'fazendo induções e conjecturas. Assim, espera-se que eles desenvolvam a ' +
-            'capacidade de identificar oportunidades de utilização da matemática para ' +
-            'resolver problemas, aplicando conceitos, procedimentos e resultados para ' +
-            'obter soluções e interpretá-las segundo os contextos das situações. A dedução ' +
-            'de algumas propriedades e a verificação de conjecturas, a partir de outras, ' +
-            'podem ser estimuladas, sobretudo ao final do Ensino Fundamental.'),
-        new Disciplina(
-            4,
-            'Ciências',
-            'Ao estudar Ciências, as pessoas aprendem a respeito ' +
-            'de si mesmas, da diversidade e dos processos de evolução e manutenção da vida, ' +
-            'do mundo material – com os seus recursos naturais, suas transformações e fontes ' +
-            'de energia –, do nosso planeta no Sistema Solar e no Universo e da aplicação ' +
-            'dos conhecimentos científicos nas várias esferas da vida humana. ' +
-            'Essas aprendizagens, entre outras, possibilitam que os alunos compreendam, ' +
-            'expliquem e intervenham no mundo em que vivem.')
-    ];
-    */
+    this.percentual0 = Math.round((this.tipo0/this.tipoTodos)*100);
+    this.percentual1 = Math.round((this.tipo1/this.tipoTodos)*100);
+    this.percentual2 = Math.round((this.tipo2/this.tipoTodos)*100);
+    this.percentual3 = Math.round((this.tipo3/this.tipoTodos)*100);
+    this.percentualrelacao = Math.round(((this.totalabril-this.totalmarco)/this.totalmarco)*100);
+  }
+  salvar(){
+    const ocor = new Ocorrencia(this.alunomatricula,this.alunonome,this.data,this.responsavelcompareceu,this.responsavelnome,this.tipo,this.observacao);
+    this.ocorrencias.push(ocor);
+    this.limpar();
+    this.atualizar();
+    this.cadastrou = true;
+    localStorage.setItem("tipos", JSON.stringify(this.tipos));
+    localStorage.setItem("ocorrencias", JSON.stringify(this.ocorrencias));
+    localStorage.setItem("alunos", JSON.stringify(this.alunos));
+  }
+  limpar(){
+    this.alunomatricula = null;
+    this.alunonome = null;
+    this.data = null;
+    this.responsavelcompareceu = false;
+    this.responsavelnome = null;
+    this.tipo = null;
+    this.observacao = null;
+    this.exibirFormulario = false;
+    this.cadastrou = false;
+  }
 }
